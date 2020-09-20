@@ -62,7 +62,7 @@
             // 
             this.pnTarget.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnTarget.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.pnTarget.BackColor = System.Drawing.Color.Navy;
             this.pnTarget.Controls.Add(this.cbTargetType);
             this.pnTarget.Controls.Add(this.btnUnloadTarget);
             this.pnTarget.Controls.Add(this.btnBrowseTarget);
@@ -281,7 +281,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.DarkBlue;
+            this.BackColor = System.Drawing.Color.DarkSlateBlue;
             this.ClientSize = new System.Drawing.Size(435, 179);
             this.Controls.Add(this.pnSideBar);
             this.Controls.Add(this.btnTargetSettings);

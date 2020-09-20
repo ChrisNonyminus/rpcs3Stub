@@ -43,6 +43,7 @@ namespace rpcs3Stub
 
             string backupPath = Path.Combine(rpcs3Watch.currentDir, "FILEBACKUPS");
             string paramsPath = Path.Combine(rpcs3Watch.currentDir, "PARAMS");
+            string rpcs3Path = Path.Combine(rpcs3Watch.currentDir, "RPCS3");
 
             if (!Directory.Exists(backupPath))
                 Directory.CreateDirectory(backupPath);
@@ -135,7 +136,7 @@ namespace rpcs3Stub
 
             FindRPCS3Dialog = new OpenFileDialog();
 
-            FindRPCS3Dialog.Title = "Select RPCS3";
+            FindRPCS3Dialog.Title = "Select RPCS3 (Preferably the version that comes with rpcs3Stub)";
             FindRPCS3Dialog.Filter = "Executable Files|rpcs3.exe";
             FindRPCS3Dialog.RestoreDirectory = true;
             if (FindRPCS3Dialog.ShowDialog() == DialogResult.OK)
@@ -189,7 +190,8 @@ namespace rpcs3Stub
 
             DirectoryInfo gameInstall = new DirectoryInfo(gameInstallFolder).GetDirectories().FirstOrDefault(); //hopefully searches for USRDIR if all goes well
             DirectoryInfo gameCache = new DirectoryInfo(gameCacheFolder);
-            DirectoryInfo shaderCache = gameCache.GetDirectories().Where(it => it.Name.Contains(gameElf.Name)).FirstOrDefault().GetDirectories().Where(it => it.Name.ToUpper().Contains("SHADERS")).FirstOrDefault().GetDirectories().FirstOrDefault().GetDirectories().FirstOrDefault().GetDirectories().FirstOrDefault();
+            DirectoryInfo shaderCache = gameCache;
+            if (gameCache.Name != rpcs3exe.DirectoryName) gameCache.GetDirectories().Where(it => it.Name.Contains(gameElf.Name)).FirstOrDefault().GetDirectories().Where(it => it.Name.ToUpper().Contains("SHADERS")).FirstOrDefault().GetDirectories().FirstOrDefault().GetDirectories().FirstOrDefault().GetDirectories().FirstOrDefault();
 
             rpcs3Watch.currentFileInfo.targetShortName = gameElf.Name;
             rpcs3Watch.currentFileInfo.targetFullName = gameElf.FullName;
@@ -198,7 +200,6 @@ namespace rpcs3Stub
 
             //var allFiles = DirSearch(elfLocation.FullName).ToArray();
             DirectoryInfo firstSubFolder = elfLocation.GetDirectories()[0];
-            DirectoryInfo secondSubFolder = elfLocation.GetDirectories()[1];
             DirectoryInfo PS3_GAME = elfLocation.Parent;
 
             /*if (allFiles.FirstOrDefault(it => it.ToUpper().Contains("UNITY")) == null)
@@ -211,7 +212,6 @@ namespace rpcs3Stub
             //var allrpcs3DllFiles = allDllFiles.Where(it => it.ToUpper().Contains("UNITY")).ToArray();
             //var rpcs3EngineDll = allDllFiles.Where(it => it.ToUpper().Contains("BDDATA.DLL")).ToArray();
             var firstSubfolderDataFiles = DirSearch(firstSubFolder.FullName).ToArray();
-            var secondSubfolderDataFiles = DirSearch(secondSubFolder.FullName).ToArray();
             var gameInstallDataFiles = DirSearch(gameInstall.GetDirectories().FirstOrDefault().FullName).ToArray();
             var gameShaderCache = DirSearch(shaderCache.FullName).ToArray();
             gameName = PS3_GAME.Parent.Name;
@@ -234,7 +234,6 @@ namespace rpcs3Stub
                 case TargetType.ELF_BDDATA:
                     targetFiles.Add(gameElf.FullName);
                     targetFiles.AddRange(firstSubfolderDataFiles);
-                    targetFiles.AddRange(secondSubfolderDataFiles);
 
                     break;
                 case TargetType.EVERYTHING:
@@ -242,11 +241,9 @@ namespace rpcs3Stub
                     targetFiles.AddRange(gameInstallDataFiles);
                     targetFiles.AddRange(gameShaderCache);
                     targetFiles.AddRange(firstSubfolderDataFiles);
-                    targetFiles.AddRange(secondSubfolderDataFiles);
                     break;
                 case TargetType.BDDATA:
                     targetFiles.AddRange(firstSubfolderDataFiles);
-                    targetFiles.AddRange(secondSubfolderDataFiles);
                     break;
             }
             string multipleFiles = "";
