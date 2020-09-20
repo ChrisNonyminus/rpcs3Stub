@@ -82,7 +82,7 @@ namespace rpcs3Stub
             lbTarget.Visible = false;
             cbTargetType.Enabled = true;
 
-            btnTargetSettings.Visible = false; //users shouldn't need to edit these settings for this stub probably
+            btnTargetSettings.Visible = true;
 
             btnRestoreBackup.Enabled = false;
             btnResetBackup.Enabled = false;
