@@ -42,7 +42,7 @@ namespace rpcs3Stub
         {
             cbTargetType.SelectedIndex = 0;
 
-            UICore.SetRTCColor(Color.Aquamarine, this);
+            UICore.SetRTCColor(Color.DarkBlue, this);
 
             rpcs3Watch.Start();
         }
