@@ -255,9 +255,9 @@ namespace rpcs3Stub
                 if (i < targetFiles.Count - 1)
                     multipleFiles += "|";
             }
-
+            string targetId = "File|"+targetFiles.FirstOrDefault();
             var mfi = new MultipleFileInterface(multipleFiles, rpcs3Watch.currentFileInfo.bigEndian, rpcs3Watch.currentFileInfo.useAutomaticBackups);
-            var finterface = new FileInterface(gameElf.FullName, true, rpcs3Watch.currentFileInfo.useAutomaticBackups, _startPadding: ELF_OFFSET); //add the elf and do the offset
+            var finterface = new FileInterface(targetId, true, true, _startPadding: ELF_OFFSET); //add the elf and do the offset
 
             if (rpcs3Watch.currentFileInfo.useCacheAndMultithread)
             {
