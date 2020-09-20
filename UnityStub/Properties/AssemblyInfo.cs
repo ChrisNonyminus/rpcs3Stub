@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("UnityStub")]
-[assembly: AssemblyDescription("Bridge between Unity Games and RTC")]
+[assembly: AssemblyTitle("rpcs3Stub")]
+[assembly: AssemblyDescription("Bridge between PS3 Games and RTC")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Redscientist Media")]
-[assembly: AssemblyProduct("UnityStub")]
+[assembly: AssemblyProduct("rpcs3Stub")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

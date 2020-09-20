@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Vanguard;
 
-namespace UnityStub
+namespace rpcs3Stub
 {
     public partial class StubForm : Form
     {
@@ -25,15 +25,15 @@ namespace UnityStub
             SyncObjectSingleton.SyncObject = this;
 
 
-            Text += UnityWatch.UnityStubVersion;
+            Text += rpcs3Watch.rpcs3StubVersion;
 
             this.cbTargetType.Items.AddRange(new object[] {
-                TargetType.UNITYEXE_UNITYDLL,
-                TargetType.UNITYEXE_ALLDLL,
-                TargetType.UNITYEXE,
-                TargetType.UNITYEXE_KNOWNDLL,
-                TargetType.UNITYENGINE,
-                TargetType.ALLTHEGAME,
+                TargetType.ELF_SHADERCACHE,
+                TargetType.ELF_INSTALLDATA,
+                TargetType.EBOOTELF,
+                TargetType.ELF_BDDATA,
+                TargetType.BDDATA,
+                TargetType.EVERYTHING,
             });
 
         }
@@ -42,9 +42,9 @@ namespace UnityStub
         {
             cbTargetType.SelectedIndex = 0;
 
-            Colors.SetRTCColor(Color.Aquamarine, this);
+            UICore.SetRTCColor(Color.Aquamarine, this);
 
-            UnityWatch.Start();
+            rpcs3Watch.Start();
         }
 
         Size originalLbTargetSize;
@@ -67,10 +67,10 @@ namespace UnityStub
             //lbTargetExecution.Enabled = true;
             //pnTargetExecution.Enabled = true;
 
-            UnityWatch.EnableInterface();
+            rpcs3Watch.EnableInterface();
 
-            lbTarget.Text = UnityWatch.currentFileInfo.selectedTargetType.ToString() + " target loaded";
-            lbTargetStatus.Text = UnityWatch.currentFileInfo.selectedTargetType.ToString() + " target loaded";
+            lbTarget.Text = rpcs3Watch.currentFileInfo.selectedTargetType.ToString() + " target loaded";
+            lbTargetStatus.Text = rpcs3Watch.currentFileInfo.selectedTargetType.ToString() + " target loaded";
         }
 
         public void DisableInterface()
@@ -93,7 +93,7 @@ namespace UnityStub
         private void BtnBrowseTarget_Click(object sender, EventArgs e)
         {
 
-            if (!UnityWatch.LoadTarget())
+            if (!rpcs3Watch.LoadTarget())
                 return;
 
             if (!VanguardCore.vanguardConnected)
@@ -105,7 +105,7 @@ namespace UnityStub
 
         private void BtnReleaseTarget_Click(object sender, EventArgs e)
         {
-            if(!UnityWatch.CloseTarget())
+            if(!rpcs3Watch.CloseTarget())
                 return;
             DisableInterface();
         }
@@ -113,15 +113,15 @@ namespace UnityStub
         private void CbTargetType_SelectedIndexChanged(object sender, EventArgs e)
         {
             //if(cbSelectedExecution.SelectedItem.ToString())
-            UnityWatch.currentFileInfo.selectedTargetType = cbTargetType.SelectedItem.ToString();
+            rpcs3Watch.currentFileInfo.selectedTargetType = cbTargetType.SelectedItem.ToString();
 
         }
 
         private void BtnRestoreBackup_Click(object sender, EventArgs e)
         {
-            UnityWatch.KillProcess();
-            UnityWatch.currentFileInfo.targetInterface?.CloseStream();
-            UnityWatch.currentFileInfo.targetInterface?.RestoreBackup();
+            rpcs3Watch.KillProcess();
+            rpcs3Watch.currentFileInfo.targetInterface?.CloseStream();
+            rpcs3Watch.currentFileInfo.targetInterface?.RestoreBackup();
         }
 
         private void BtnResetBackup_Click(object sender, EventArgs e)
@@ -134,19 +134,19 @@ you won't be able to restore the original file using it.
 Are you sure you want to reset the current target's backup?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.No)
                 return;
 
-            UnityWatch.currentFileInfo.targetInterface?.ResetBackup(true);
+            rpcs3Watch.currentFileInfo.targetInterface?.ResetBackup(true);
 
         }
 
         private void BtnClearAllBackups_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to clear ALL THE BACKUPS\n from UnityStub's cache?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.No)
+            if (MessageBox.Show("Are you sure you want to clear ALL THE BACKUPS\n from rpcs3Stub's cache?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.No)
                 return;
 
 
-            UnityWatch.currentFileInfo.targetInterface?.RestoreBackup();
+            rpcs3Watch.currentFileInfo.targetInterface?.RestoreBackup();
 
-            foreach (string file in Directory.GetFiles(Path.Combine(UnityWatch.currentDir,"FILEBACKUPS")))
+            foreach (string file in Directory.GetFiles(Path.Combine(rpcs3Watch.currentDir,"FILEBACKUPS")))
             {
                 try
                 {
@@ -159,7 +159,7 @@ Are you sure you want to reset the current target's backup?", "WARNING", Message
             }
 
             FileInterface.CompositeFilenameDico = new Dictionary<string, string>();
-            UnityWatch.currentFileInfo.targetInterface?.ResetBackup(false);
+            rpcs3Watch.currentFileInfo.targetInterface?.ResetBackup(false);
             FileInterface.SaveCompositeFilenameDico();
             MessageBox.Show("All the backups were cleared.");
         }
@@ -176,24 +176,24 @@ Are you sure you want to reset the current target's backup?", "WARNING", Message
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Big endian", null, new EventHandler((ob, ev) => {
 
-                    UnityWatch.currentFileInfo.bigEndian = !UnityWatch.currentFileInfo.bigEndian;
+                    rpcs3Watch.currentFileInfo.bigEndian = !rpcs3Watch.currentFileInfo.bigEndian;
 
                     if (VanguardCore.vanguardConnected)
-                        UnityWatch.UpdateDomains();
+                        rpcs3Watch.UpdateDomains();
 
-                }))).Checked = UnityWatch.currentFileInfo.bigEndian;
+                }))).Checked = rpcs3Watch.currentFileInfo.bigEndian;
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Auto-Uncorrupt", null, new EventHandler((ob, ev) => {
 
-                    UnityWatch.currentFileInfo.autoUncorrupt = !UnityWatch.currentFileInfo.autoUncorrupt;
+                    rpcs3Watch.currentFileInfo.autoUncorrupt = !rpcs3Watch.currentFileInfo.autoUncorrupt;
 
-                }))).Checked = UnityWatch.currentFileInfo.autoUncorrupt;
+                }))).Checked = rpcs3Watch.currentFileInfo.autoUncorrupt;
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Use Caching + Multithreading", null, new EventHandler((ob, ev) => {
 
-                    UnityWatch.currentFileInfo.useCacheAndMultithread = !UnityWatch.currentFileInfo.useCacheAndMultithread;
+                    rpcs3Watch.currentFileInfo.useCacheAndMultithread = !rpcs3Watch.currentFileInfo.useCacheAndMultithread;
 
-                }))).Checked = UnityWatch.currentFileInfo.useCacheAndMultithread;
+                }))).Checked = rpcs3Watch.currentFileInfo.useCacheAndMultithread;
 
                 columnsMenu.Show(this, locate);
             }
@@ -201,7 +201,7 @@ Are you sure you want to reset the current target's backup?", "WARNING", Message
 
         private void StubForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!UnityWatch.CloseTarget(false))
+            if (!rpcs3Watch.CloseTarget(false))
                 e.Cancel = true;
         }
     }

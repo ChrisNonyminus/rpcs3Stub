@@ -1,4 +1,4 @@
-﻿using UnityStub;
+﻿using rpcs3Stub;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
 using RTCV.Common;
@@ -19,7 +19,7 @@ namespace Vanguard
     {
         public static string[] args;
         public static bool vanguardStarted = false;
-        public static bool vanguardConnected => (VanguardImplementation.connector != null ? VanguardImplementation.connector.netcoreStatus == RTCV.NetCore.Enums.NetworkStatus.CONNECTED : false);
+        public static bool vanguardConnected => (VanguardImplementation.connector != null ? VanguardImplementation.connector.netcoreStatus == NetworkStatus.CONNECTED : false);
 
         internal static DialogResult ShowErrorDialog(Exception exception, bool canContinue = false)
         {
@@ -119,8 +119,8 @@ namespace Vanguard
         {
             var partial = new PartialSpec("VanguardSpec");
 
-            partial[VSPEC.NAME] = "UnityStub";
-            partial[VSPEC.SYSTEM] = "Unity";
+            partial[VSPEC.NAME] = "rpcs3Stub";
+            partial[VSPEC.SYSTEM] = "PS3";
             partial[VSPEC.GAMENAME] = String.Empty;
             partial[VSPEC.SYSTEMPREFIX] = String.Empty;
             partial[VSPEC.OPENROMFILENAME] = String.Empty;
@@ -141,7 +141,7 @@ namespace Vanguard
             partial[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] = true;
             partial[VSPEC.EMUDIR] = emuDir;
 
-            if (UnityWatch.currentFileInfo.useCacheAndMultithread)
+            if (rpcs3Watch.currentFileInfo.useCacheAndMultithread)
                 partial[VSPEC.SUPPORTS_MULTITHREAD] = true;
 
             //partial[VSPEC.CONFIG_PATHS] = new[] { Path.Combine(emuDir, "config.ini") };
@@ -162,8 +162,8 @@ namespace Vanguard
             if (VanguardCore.attached)
                 RTCV.Vanguard.VanguardConnector.PushVanguardSpecRef(AllSpec.VanguardSpec);
 
-            LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.CorruptCore, RTCV.NetCore.Commands.Remote.PushVanguardSpec, emuSpecTemplate, true);
-            LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.UI, RTCV.NetCore.Commands.Remote.PushVanguardSpec, emuSpecTemplate, true);
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, emuSpecTemplate, true);
+            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, emuSpecTemplate, true);
 
 
             AllSpec.VanguardSpec.SpecUpdated += (o, e) =>
@@ -171,8 +171,8 @@ namespace Vanguard
                 PartialSpec partial = e.partialSpec;
 
 
-                LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.CorruptCore, RTCV.NetCore.Commands.Remote.PushVanguardSpecUpdate, partial, true);
-                LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.UI, RTCV.NetCore.Commands.Remote.PushVanguardSpecUpdate, partial, true);
+                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVANGUARDSPECUPDATE, partial, true);
+                LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPECUPDATE, partial, true);
             };
         }
 

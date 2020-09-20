@@ -9,31 +9,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace UnityStub
+namespace rpcs3Stub
 {
     static class Executor
     {
-        public static string unityExeFile = null;
+        public static string gameElf = null;
+        public static string rpcs3 = null;
 
         public static void Execute()
         {
 
-           if (unityExeFile != null)
+           if (gameElf != null && rpcs3 !=null)
            {
 
-               string fullPath = unityExeFile;
+               string fullPath = gameElf;
+               string emuPath = rpcs3;
                ProcessStartInfo psi = new ProcessStartInfo();
-               psi.FileName = Path.GetFileName(fullPath);
-               psi.WorkingDirectory = Path.GetDirectoryName(fullPath);
+               psi.FileName = Path.GetFileName(emuPath);
+               psi.WorkingDirectory = Path.GetDirectoryName(emuPath);
+               psi.Arguments = "\"" + gameElf + "\"";
 
                 try
                 {
                     Process.Start(psi);
                 }
-                catch (Exception) { } //Eat exceptions since weird things happen if the exe is corrupted too much
+                catch (Exception) { }
            }
            else
-               MessageBox.Show("You need to specify a file to execute with the Edit Exec button.");
+               MessageBox.Show("You need to specify the game elf file and rpcs3's exe.");
            return;
         }
     }

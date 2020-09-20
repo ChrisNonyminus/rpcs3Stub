@@ -1,4 +1,4 @@
-﻿namespace UnityStub
+﻿namespace rpcs3Stub
 {
     partial class StubForm
     {
@@ -281,7 +281,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.BackColor = System.Drawing.Color.DarkBlue;
             this.ClientSize = new System.Drawing.Size(435, 179);
             this.Controls.Add(this.pnSideBar);
             this.Controls.Add(this.btnTargetSettings);
@@ -292,7 +292,7 @@
             this.MinimumSize = new System.Drawing.Size(451, 218);
             this.Name = "StubForm";
             this.Tag = "color:dark2";
-            this.Text = "Unity Stub ";
+            this.Text = "rpcs3 Stub ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StubForm_FormClosing);
             this.Load += new System.EventHandler(this.StubForm_Load);
             this.pnTarget.ResumeLayout(false);

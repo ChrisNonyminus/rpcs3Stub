@@ -13,20 +13,20 @@ using System.IO;
 using Ceras;
 using RTCV.CorruptCore;
 
-namespace UnityStub
+namespace rpcs3Stub
 {
 
-    public class UnityStubFileInfo
+    public class rpcs3StubFileInfo
     {
         internal string targetShortName = "No target";
         internal bool writeCopyMode = false;
         internal string targetFullName = "No target";
         internal FileMemoryInterface targetInterface;
-        internal string selectedTargetType = TargetType.UNITYEXE_UNITYDLL;
+        internal string selectedTargetType = TargetType.EBOOTELF;
         internal bool autoUncorrupt = true;
         internal bool TerminateBeforeExecution = true;
         internal bool useAutomaticBackups = true;
-        internal bool bigEndian = false;
+        internal bool bigEndian = true;
         internal bool useCacheAndMultithread = true;
 
         public override string ToString()
@@ -37,12 +37,12 @@ namespace UnityStub
 
     public static class TargetType
     {
-        public const string UNITYEXE_ALLDLL = "Unity EXE and all DLLs";
-        public const string UNITYEXE_UNITYDLL = "Unity EXE and unity DLLs";
-        public const string UNITYEXE_KNOWNDLL = "Unity EXE and gameplay DLLs";
-        public const string UNITYEXE = "Unity EXE";
-        public const string UNITYENGINE = "UnityEngine.dll";
-        public const string ALLTHEGAME = "The entire game folder";
+        public const string ELF_INSTALLDATA = "Decrypted ELF file for game, along with the install folder";
+        public const string ELF_SHADERCACHE = "Decrypted ELF file and any detected shader caches (probably won't work unless you don't corrupt the ELF)";
+        public const string ELF_BDDATA = "Decrypted ELF file and any detected data folders";
+        public const string EBOOTELF = "Decrypted ELF file";
+        public const string BDDATA = "Any detected data folders";
+        public const string EVERYTHING = "All of the above";
     }
 
 }

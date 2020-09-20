@@ -10,9 +10,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static RTCV.NetCore.NetcoreCommands;
 using RTCV;
 using RTCV.CorruptCore;
-using UnityStub;
+using rpcs3Stub;
 using RTCV.Common;
 
 namespace Vanguard
@@ -65,65 +66,65 @@ namespace Vanguard
                 switch (message.Type) //Handle received messages here
                 {
 
-                    case RTCV.NetCore.Commands.Remote.AllSpecSent:
+                    case REMOTE_ALLSPECSSENT:
                         {
                             //We still need to set the emulator's path
-                            AllSpec.VanguardSpec.Update(VSPEC.EMUDIR, UnityWatch.currentDir);
+                            AllSpec.VanguardSpec.Update(VSPEC.EMUDIR, rpcs3Watch.currentDir);
                             SyncObjectSingleton.FormExecute(() =>
                             {
-                                UnityWatch.UpdateDomains();
+                                rpcs3Watch.UpdateDomains();
                             });
                         }
                         break;
-                    case RTCV.NetCore.Commands.Basic.SaveSavestate:
+                    case SAVESAVESTATE: //Here we could possibly use the game's save data folder as a savestate like with cemustub
                         e.setReturnValue("");
                         break;
 
-                    case RTCV.NetCore.Commands.Basic.LoadSavestate:
+                    case LOADSAVESTATE:
                         e.setReturnValue(true);
                         break;
 
-                    case RTCV.NetCore.Commands.Remote.PreCorruptAction:
-                        if(UnityWatch.currentFileInfo.TerminateBeforeExecution)
-                            UnityWatch.KillProcess();
-                        UnityWatch.currentFileInfo.targetInterface.CloseStream();
-                        UnityWatch.RestoreTarget();
+                    case REMOTE_PRECORRUPTACTION:
+                        if(rpcs3Watch.currentFileInfo.TerminateBeforeExecution)
+                            rpcs3Watch.KillProcess();
+                        rpcs3Watch.currentFileInfo.targetInterface.CloseStream();
+                        rpcs3Watch.RestoreTarget();
                         break;
 
-                    case RTCV.NetCore.Commands.Remote.PostCorruptAction:
+                    case REMOTE_POSTCORRUPTACTION:
                         //var fileName = advancedMessage.objectValue as String;
-                        UnityWatch.currentFileInfo.targetInterface.CloseStream();
+                        rpcs3Watch.currentFileInfo.targetInterface.CloseStream();
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             Executor.Execute();
                         });
                         break;
 
-                    case RTCV.NetCore.Commands.Remote.CloseGame:
+                    case REMOTE_CLOSEGAME:
                         SyncObjectSingleton.FormExecute(() =>
                         {
-                            UnityWatch.KillProcess();
+                            rpcs3Watch.KillProcess();
                         });
                         break;
 
-                    case RTCV.NetCore.Commands.Remote.DomainGetDomains:
+                    case REMOTE_DOMAIN_GETDOMAINS:
                         SyncObjectSingleton.FormExecute(() =>
                         {
-                            e.setReturnValue(UnityWatch.GetInterfaces());
+                            e.setReturnValue(rpcs3Watch.GetInterfaces());
                         });
                         break;
 
-                    case RTCV.NetCore.Commands.Remote.EventEmuMainFormClose:
+                    case REMOTE_EVENT_EMU_MAINFORM_CLOSE:
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             Environment.Exit(0);
                         });
                         break;
-                    case RTCV.NetCore.Commands.Remote.IsNormalAdvance:
+                    case REMOTE_ISNORMALADVANCE:
                         e.setReturnValue(true);
                         break;
 
-                    case RTCV.NetCore.Commands.Remote.EventCloseEmulator:
+                    case REMOTE_EVENT_CLOSEEMULATOR:
                         Environment.Exit(-1);
                         break;
                 }
