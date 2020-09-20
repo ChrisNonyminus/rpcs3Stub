@@ -28,12 +28,12 @@ namespace rpcs3Stub
             Text += rpcs3Watch.rpcs3StubVersion;
 
             this.cbTargetType.Items.AddRange(new object[] {
-                TargetType.ELF_SHADERCACHE,
-                TargetType.ELF_INSTALLDATA,
+                //TargetType.ELF_SHADERCACHE,
+                //TargetType.ELF_INSTALLDATA,
                 TargetType.EBOOTELF,
-                TargetType.ELF_BDDATA,
-                TargetType.BDDATA,
-                TargetType.EVERYTHING,
+                //TargetType.ELF_BDDATA,
+                //TargetType.BDDATA,
+                //TargetType.EVERYTHING,
             });
 
         }

@@ -155,43 +155,43 @@ namespace rpcs3Stub
 
             FileInfo gameElf = new FileInfo(filename);
             FileInfo rpcs3exe = new FileInfo(rpcs3exename);
-            if (rpcs3Watch.currentFileInfo.selectedTargetType == TargetType.ELF_INSTALLDATA || rpcs3Watch.currentFileInfo.selectedTargetType == TargetType.EVERYTHING)
-            {
-                GameInstallLocationDialog = new FolderBrowserDialog();
-                GameInstallLocationDialog.Description = "Select the game's install folder (/[RPCS3 Location]/dev_hdd0/game/[game serial])";
-                if (GameInstallLocationDialog.ShowDialog() == DialogResult.OK)
-                {
-                    gameInstallFolder = GameInstallLocationDialog.SelectedPath;
-                }
-                else
-                    return false;
-            }
-            else
-                gameInstallFolder = rpcs3exe.DirectoryName; // this line that basically does nothing is here so the program doesn't flip its shit when the target type in question isn't chosen
+            //if (rpcs3Watch.currentFileInfo.selectedTargetType == TargetType.ELF_INSTALLDATA || rpcs3Watch.currentFileInfo.selectedTargetType == TargetType.EVERYTHING)
+            //{
+            //    GameInstallLocationDialog = new FolderBrowserDialog();
+            //    GameInstallLocationDialog.Description = "Select the game's install folder (/[RPCS3 Location]/dev_hdd0/game/[game serial])";
+            //    if (GameInstallLocationDialog.ShowDialog() == DialogResult.OK)
+            //    {
+            //        gameInstallFolder = GameInstallLocationDialog.SelectedPath;
+            //    }
+            //    else
+            //        return false;
+            //}
+            //else
+            //    gameInstallFolder = rpcs3exe.DirectoryName; // this line that basically does nothing is here so the program doesn't flip its shit when the target type in question isn't chosen
 
 
-            if (rpcs3Watch.currentFileInfo.selectedTargetType == TargetType.ELF_SHADERCACHE || rpcs3Watch.currentFileInfo.selectedTargetType == TargetType.EVERYTHING)
-            {
-                GameCacheLocationDialog = new FolderBrowserDialog();
+            //if (rpcs3Watch.currentFileInfo.selectedTargetType == TargetType.ELF_SHADERCACHE || rpcs3Watch.currentFileInfo.selectedTargetType == TargetType.EVERYTHING)
+            //{
+            //    GameCacheLocationDialog = new FolderBrowserDialog();
 
-                GameCacheLocationDialog.Description = "Select the game's cache folder (/[RPCS3 Location]/cache/[game serial])";
-                if (GameCacheLocationDialog.ShowDialog() == DialogResult.OK)
-                {
-                    gameCacheFolder = GameCacheLocationDialog.SelectedPath;
-                }
-                else
-                    return false;
-            }
-            else
-                gameCacheFolder = rpcs3exe.DirectoryName; //ditto
+            //    GameCacheLocationDialog.Description = "Select the game's cache folder (/[RPCS3 Location]/cache/[game serial])";
+            //    if (GameCacheLocationDialog.ShowDialog() == DialogResult.OK)
+            //    {
+            //        gameCacheFolder = GameCacheLocationDialog.SelectedPath;
+            //    }
+            //    else
+            //        return false;
+            //}
+            //else
+            //    gameCacheFolder = rpcs3exe.DirectoryName; //ditto
 
             if (!CloseTarget(false))
                 return false;
 
-            DirectoryInfo gameInstall = new DirectoryInfo(gameInstallFolder).GetDirectories().FirstOrDefault(); //hopefully searches for USRDIR if all goes well
-            DirectoryInfo gameCache = new DirectoryInfo(gameCacheFolder);
-            DirectoryInfo shaderCache = gameCache;
-            if (gameCache.Name != rpcs3exe.DirectoryName) gameCache.GetDirectories().Where(it => it.Name.Contains(gameElf.Name)).FirstOrDefault().GetDirectories().Where(it => it.Name.ToUpper().Contains("SHADERS")).FirstOrDefault().GetDirectories().FirstOrDefault().GetDirectories().FirstOrDefault().GetDirectories().FirstOrDefault();
+            //DirectoryInfo gameInstall = new DirectoryInfo(gameInstallFolder).GetDirectories().FirstOrDefault(); //hopefully searches for USRDIR if all goes well
+            //DirectoryInfo gameCache = new DirectoryInfo(gameCacheFolder);
+            //DirectoryInfo shaderCache = gameCache;
+            //if (gameCache.Name != rpcs3exe.DirectoryName) gameCache.GetDirectories().Where(it => it.Name.Contains(gameElf.Name)).FirstOrDefault().GetDirectories().Where(it => it.Name.ToUpper().Contains("SHADERS")).FirstOrDefault().GetDirectories().FirstOrDefault().GetDirectories().FirstOrDefault().GetDirectories().FirstOrDefault();
 
             rpcs3Watch.currentFileInfo.targetShortName = gameElf.Name;
             rpcs3Watch.currentFileInfo.targetFullName = gameElf.FullName;
@@ -199,7 +199,7 @@ namespace rpcs3Stub
             DirectoryInfo elfLocation = gameElf.Directory;
 
             //var allFiles = DirSearch(elfLocation.FullName).ToArray();
-            DirectoryInfo firstSubFolder = elfLocation.GetDirectories()[0];
+            //DirectoryInfo firstSubFolder = elfLocation.GetDirectories()[0];
             DirectoryInfo PS3_GAME = elfLocation.Parent;
 
             /*if (allFiles.FirstOrDefault(it => it.ToUpper().Contains("UNITY")) == null)
@@ -211,9 +211,9 @@ namespace rpcs3Stub
             //var allDllFiles = allFiles.Where(it => it.ToUpper().EndsWith(".DLL")).ToArray();
             //var allrpcs3DllFiles = allDllFiles.Where(it => it.ToUpper().Contains("UNITY")).ToArray();
             //var rpcs3EngineDll = allDllFiles.Where(it => it.ToUpper().Contains("BDDATA.DLL")).ToArray();
-            var firstSubfolderDataFiles = DirSearch(firstSubFolder.FullName).ToArray();
-            var gameInstallDataFiles = DirSearch(gameInstall.GetDirectories().FirstOrDefault().FullName).ToArray();
-            var gameShaderCache = DirSearch(shaderCache.FullName).ToArray();
+            //var firstSubfolderDataFiles = DirSearch(firstSubFolder.FullName).ToArray();
+            //var gameInstallDataFiles = DirSearch(gameInstall.GetDirectories().FirstOrDefault().FullName).ToArray();
+            //var gameShaderCache = DirSearch(shaderCache.FullName).ToArray();
             gameName = PS3_GAME.Parent.Name;
 
             List<string> targetFiles = new List<string>();
@@ -223,28 +223,28 @@ namespace rpcs3Stub
                 case TargetType.EBOOTELF:
                     targetFiles.Add(gameElf.FullName);
                     break;
-                case TargetType.ELF_INSTALLDATA:
-                    targetFiles.Add(gameElf.FullName);
-                    targetFiles.AddRange(gameInstallDataFiles);
-                    break;
-                case TargetType.ELF_SHADERCACHE:
-                    targetFiles.Add(gameElf.FullName);
-                    targetFiles.AddRange(gameShaderCache);
-                    break;
-                case TargetType.ELF_BDDATA:
-                    targetFiles.Add(gameElf.FullName);
-                    targetFiles.AddRange(firstSubfolderDataFiles);
+                //case TargetType.ELF_INSTALLDATA:
+                //    targetFiles.Add(gameElf.FullName);
+                //    targetFiles.AddRange(gameInstallDataFiles);
+                //    break;
+                //case TargetType.ELF_SHADERCACHE:
+                //    targetFiles.Add(gameElf.FullName);
+                //    targetFiles.AddRange(gameShaderCache);
+                //    break;
+                //case TargetType.ELF_BDDATA:
+                //    targetFiles.Add(gameElf.FullName);
+                //    targetFiles.AddRange(firstSubfolderDataFiles);
 
-                    break;
-                case TargetType.EVERYTHING:
-                    targetFiles.Add(gameElf.FullName);
-                    targetFiles.AddRange(gameInstallDataFiles);
-                    targetFiles.AddRange(gameShaderCache);
-                    targetFiles.AddRange(firstSubfolderDataFiles);
-                    break;
-                case TargetType.BDDATA:
-                    targetFiles.AddRange(firstSubfolderDataFiles);
-                    break;
+                //    break;
+                //case TargetType.EVERYTHING:
+                //    targetFiles.Add(gameElf.FullName);
+                //    targetFiles.AddRange(gameInstallDataFiles);
+                //    targetFiles.AddRange(gameShaderCache);
+                //    targetFiles.AddRange(firstSubfolderDataFiles);
+                //    break;
+                //case TargetType.BDDATA:
+                //    targetFiles.AddRange(firstSubfolderDataFiles);
+                //    break;
             }
             string multipleFiles = "";
 
