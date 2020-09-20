@@ -40,9 +40,9 @@ namespace rpcs3Stub
         //comment out everything except for the elf target because the code for searching for the shader cache is borked
         //public const string ELF_INSTALLDATA = "Decrypted ELF file for game, along with the install folder";
         //public const string ELF_SHADERCACHE = "Decrypted ELF file and any detected shader caches (probably won't work unless you don't corrupt the ELF)";
-        //public const string ELF_BDDATA = "Decrypted ELF file and any detected data folders";
+        public const string ELF_BDDATA = "Decrypted ELF file and first available data subfolder";
         public const string EBOOTELF = "Decrypted ELF file";
-        //public const string BDDATA = "Any detected data folders";
+        public const string BDDATA = "Contents of first available data subflder";
         //public const string EVERYTHING = "All of the above";
     }
 

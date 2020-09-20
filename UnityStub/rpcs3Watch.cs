@@ -199,7 +199,7 @@ namespace rpcs3Stub
             DirectoryInfo elfLocation = gameElf.Directory;
 
             //var allFiles = DirSearch(elfLocation.FullName).ToArray();
-            //DirectoryInfo firstSubFolder = elfLocation.GetDirectories()[0];
+            DirectoryInfo firstSubFolder = elfLocation.GetDirectories()[0];
             DirectoryInfo PS3_GAME = elfLocation.Parent;
 
             /*if (allFiles.FirstOrDefault(it => it.ToUpper().Contains("UNITY")) == null)
@@ -211,7 +211,7 @@ namespace rpcs3Stub
             //var allDllFiles = allFiles.Where(it => it.ToUpper().EndsWith(".DLL")).ToArray();
             //var allrpcs3DllFiles = allDllFiles.Where(it => it.ToUpper().Contains("UNITY")).ToArray();
             //var rpcs3EngineDll = allDllFiles.Where(it => it.ToUpper().Contains("BDDATA.DLL")).ToArray();
-            //var firstSubfolderDataFiles = DirSearch(firstSubFolder.FullName).ToArray();
+            var firstSubfolderDataFiles = DirSearch(firstSubFolder.FullName).ToArray();
             //var gameInstallDataFiles = DirSearch(gameInstall.GetDirectories().FirstOrDefault().FullName).ToArray();
             //var gameShaderCache = DirSearch(shaderCache.FullName).ToArray();
             gameName = PS3_GAME.Parent.Name;
@@ -231,20 +231,21 @@ namespace rpcs3Stub
                 //    targetFiles.Add(gameElf.FullName);
                 //    targetFiles.AddRange(gameShaderCache);
                 //    break;
-                //case TargetType.ELF_BDDATA:
-                //    targetFiles.Add(gameElf.FullName);
-                //    targetFiles.AddRange(firstSubfolderDataFiles);
-
-                //    break;
+                case TargetType.ELF_BDDATA:
+                   targetFiles.Add(gameElf.FullName);
+                   targetFiles.AddRange(firstSubfolderDataFiles);
+                    MessageBox.Show("Note: Data files are sometimes in little endian. However, due to my poor coding skills, in this target type they are identified as big endian due to the fact that the ELF is big endian and I can't separate the endianness of files.");
+                   break;
                 //case TargetType.EVERYTHING:
                 //    targetFiles.Add(gameElf.FullName);
                 //    targetFiles.AddRange(gameInstallDataFiles);
                 //    targetFiles.AddRange(gameShaderCache);
                 //    targetFiles.AddRange(firstSubfolderDataFiles);
                 //    break;
-                //case TargetType.BDDATA:
-                //    targetFiles.AddRange(firstSubfolderDataFiles);
-                //    break;
+                case TargetType.BDDATA:
+                    targetFiles.AddRange(firstSubfolderDataFiles);
+                    rpcs3Watch.currentFileInfo.bigEndian = false;
+                    break;
             }
             string multipleFiles = "";
 
