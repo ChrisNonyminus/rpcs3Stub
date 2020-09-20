@@ -120,6 +120,7 @@ namespace rpcs3Stub
         private void BtnRestoreBackup_Click(object sender, EventArgs e)
         {
             rpcs3Watch.KillProcess();
+            rpcs3Watch.KillProcess();
             rpcs3Watch.currentFileInfo.targetInterface?.CloseStream();
             rpcs3Watch.currentFileInfo.targetInterface?.RestoreBackup();
         }

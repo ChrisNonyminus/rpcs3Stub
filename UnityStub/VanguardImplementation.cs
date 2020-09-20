@@ -85,8 +85,11 @@ namespace Vanguard
                         break;
 
                     case REMOTE_PRECORRUPTACTION:
-                        if(rpcs3Watch.currentFileInfo.TerminateBeforeExecution)
+                        if (rpcs3Watch.currentFileInfo.TerminateBeforeExecution) 
+                        { 
                             rpcs3Watch.KillProcess();
+                            rpcs3Watch.KillProcess(); //do this twice so rpcs3's game and the emulator gui will both close
+                        }
                         rpcs3Watch.currentFileInfo.targetInterface.CloseStream();
                         rpcs3Watch.RestoreTarget();
                         break;
@@ -103,6 +106,7 @@ namespace Vanguard
                     case REMOTE_CLOSEGAME:
                         SyncObjectSingleton.FormExecute(() =>
                         {
+                            rpcs3Watch.KillProcess();
                             rpcs3Watch.KillProcess();
                         });
                         break;
