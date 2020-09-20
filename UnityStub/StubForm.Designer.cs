@@ -164,7 +164,7 @@
             // 
             // pnSideBar
             // 
-            this.pnSideBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.pnSideBar.BackColor = System.Drawing.Color.DarkBlue;
             this.pnSideBar.Controls.Add(this.lbTargetStatus);
             this.pnSideBar.Controls.Add(this.label2);
             this.pnSideBar.Controls.Add(this.btnClearAllBackups);
