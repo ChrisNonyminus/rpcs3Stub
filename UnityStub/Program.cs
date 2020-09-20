@@ -26,7 +26,7 @@ namespace rpcs3Stub
 
         static void Initialize()
         {
-            MessageBox.Show("REMEMBER: You need to first set up RPCS3. If you haven't done that, close this program and set up rpcs3 using the quickstart guide on their official website. \n\nNext, choose a decrypted ELF file (You can decrypt PS3 Executables in RPCS3 by clicking 'Utilities->Decrypt PS3 Binaries') to corrupt and execute.\nNot all elfs will execute properly, and not always is EBOOT.BIN the game's true executable.\nSometimes you need to do some fiddling.\n\nAlso, when loading the ELF file, you need to make a VMD starting at address 0x78. This avoids the header.\n\nI recomend using the vector engine with limiter/value lists made for Dolphin, as the PS3 uses a similar architecture to Gamecube and Wii.");
+            MessageBox.Show("REMEMBER: You need to first set up RPCS3. If you haven't done that, close this program and set up rpcs3 using the quickstart guide on their official website. \n\nNext, choose a decrypted ELF file (You can decrypt PS3 Executables in RPCS3 by clicking 'Utilities->Decrypt PS3 Binaries') to corrupt and execute.\nNot all elfs will execute properly, and not always is EBOOT.BIN the game's true executable.\nSometimes you need to do some fiddling.\n\nI reccomend using the vector engine with limiter/value lists made for Dolphin, as the PS3 uses a similar architecture to Gamecube and Wii.");
             var frm = new StubForm();
             S.SET<StubForm>(frm);
             Application.Run(frm);

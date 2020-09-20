@@ -27,7 +27,7 @@ namespace rpcs3Stub
         public static string gameName = null;
 
         public static bool stubInterfaceEnabled = false;
-        const int ELF_OFFSET = 0x78; //We'll implement header exclusion for this later
+        const int ELF_OFFSET = 0x78;
 
 
         public static void Start()
@@ -257,11 +257,15 @@ namespace rpcs3Stub
             }
 
             var mfi = new MultipleFileInterface(multipleFiles, rpcs3Watch.currentFileInfo.bigEndian, rpcs3Watch.currentFileInfo.useAutomaticBackups);
+            var finterface = new FileInterface(targetFiles.FirstOrDefault(), rpcs3Watch.currentFileInfo.bigEndian, rpcs3Watch.currentFileInfo.useAutomaticBackups, _startPadding: ELF_OFFSET); //and the elf and do the offset
 
             if (rpcs3Watch.currentFileInfo.useCacheAndMultithread)
+            {
                 mfi.getMemoryDump();
+                finterface.getMemoryDump();
+            }
 
-            rpcs3Watch.currentFileInfo.targetInterface = mfi;
+            rpcs3Watch.currentFileInfo.targetInterface = /*mfi*/ finterface;
 
             Executor.gameElf = gameElf.FullName;
             Executor.rpcs3 = rpcs3exe.FullName;
