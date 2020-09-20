@@ -31,8 +31,8 @@ namespace rpcs3Stub
                 //TargetType.ELF_SHADERCACHE,
                 //TargetType.ELF_INSTALLDATA,
                 TargetType.EBOOTELF,
-                //TargetType.ELF_BDDATA,
-                //TargetType.BDDATA,
+                TargetType.ELF_BDDATA,
+                TargetType.BDDATA,
                 //TargetType.EVERYTHING,
             });
 
